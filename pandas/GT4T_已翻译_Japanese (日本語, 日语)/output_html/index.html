@@ -1,0 +1,2445 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=0.2" name="viewport"/>
+<title>1. ファイルの読み込みと書き込み</title>
+<link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" rel="stylesheet"/>
+<link href="css/code-highlight.css" rel="stylesheet"/>
+<link href="css/styles.css" rel="stylesheet"/>
+<link href="css/extension.css" rel="stylesheet"/>
+<style>
+        :root {
+            --slide-width: 720px;
+            --slide-height: 405px;
+        }
+    </style>
+<link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" rel="stylesheet"/>
+<script crossorigin="anonymous" defer="" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script crossorigin="anonymous" defer="" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" onload="renderMathInElement(document.body);" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+</head>
+<body>
+<div class="slide-container">
+<div class="slide-content" style="">
+<div class="content">
+<div class="auto-sizing">
+<div class="chunk chunk-paragraph">
+<p><center> <h1>第 2 章パンダスの 基礎 </h1></center></p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</code></pre></div>
+<p>学習を始める前に、 <code>pandas</code> のバージョン番号が以下のバージョン以下でないことを確認してください。そうでない場合は、必ずアップグレードしてください！ <code>xlrd, xlwt, openpyxl</code> 3つのパッケージがインストールされていることを確認してください。 <code>xlrd</code> バージョンは <code>2.0.0</code> より高くないでください。</p>
+<div class="highlight"><pre><span></span><code><span class="n">pd</span><span class="o">.</span><span class="n">__version__</span>
+</code></pre></div>
+<pre><code>'1.1.5'
+</code></pre>
+</div>
+</div>
+<div class="slide-number">
+<p>1</p>
+</div>
+</div>
+</div>
+</div>
+<div class="slide-container">
+<div class="slide-content" style="">
+<h2>1. ファイルの読み込みと書き込み</h2>
+<h3>1. ファイル読み取り</h3>
+<div class="content">
+<div class="auto-sizing">
+<div class="chunk chunk-paragraph">
+<p><code>pandas</code> 読み取ることができるファイル形式はたくさんありますが、ここでは主に <code>csv, excel, txt</code> ファイルの読み取りについて説明します。</p>
+<div class="highlight"><pre><span></span><code><span class="n">df_csv</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">'../data/my_csv.csv'</span><span class="p">)</span>
+<span class="n">df_csv</span>
+</code></pre></div>
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>col1</th>
+<th>col2</th>
+<th>col3</th>
+<th>col4</th>
+<th>col5</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+<td>2</td>
+<td>a</td>
+<td>1.4</td>
+<td>apple</td>
+<td>2020/1/1</td>
+</tr>
+<tr>
+<th>1</th>
+<td>3</td>
+<td>b</td>
+<td>3.4</td>
+<td>banana</td>
+<td>2020/1/2</td>
+</tr>
+<tr>
+<th>2</th>
+<td>6</td>
+<td>c</td>
+<td>2.5</td>
+<td>orange</td>
+<td>2020/1/5</td>
+</tr>
+<tr>
+<th>3</th>
+<td>5</td>
+<td>d</td>
+<td>3.2</td>
+<td>lemon</td>
+<td>2020/1/7</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight"><pre><span></span><code><span class="n">df_txt</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_table</span><span class="p">(</span><span class="s1">'../data/my_table.txt'</span><span class="p">)</span>
+<span class="n">df_txt</span>
+</code></pre></div>
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>col1</th>
+<th>col2</th>
+<th>col3</th>
+<th>col4</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+<td>2</td>
+<td>a</td>
+<td>1.4</td>
+<td>apple 2020/1/1</td>
+</tr>
+<tr>
+<th>1</th>
+<td>3</td>
+<td>b</td>
+<td>3.4</td>
+<td>banana 2020/1/2</td>
+</tr>
+<tr>
+<th>2</th>
+<td>6</td>
+<td>c</td>
+<td>2.5</td>
+<td>orange 2020/1/5</td>
+</tr>
+<tr>
+<th>3</th>
+<td>5</td>
+<td>d</td>
+<td>3.2</td>
+<td>lemon 2020/1/7</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight"><pre><span></span><code><span class="n">df_excel</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s1">'../data/my_excel.xlsx'</span><span class="p">)</span>
+<span class="n">df_excel</span>
+</code></pre></div>
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>col1</th>
+<th>col2</th>
+<th>col3</th>
+<th>col4</th>
+<th>col5</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+<td>2</td>
+<td>a</td>
+<td>1.4</td>
+<td>apple</td>
+<td>2020/1/1</td>
+</tr>
+<tr>
+<th>1</th>
+<td>3</td>
+<td>b</td>
+<td>3.4</td>
+<td>banana</td>
+<td>2020/1/2</td>
+</tr>
+<tr>
+<th>2</th>
+<td>6</td>
+<td>c</td>
+<td>2.5</td>
+<td>orange</td>
+<td>2020/1/5</td>
+</tr>
+<tr>
+<th>3</th>
+<td>5</td>
+<td>d</td>
+<td>3.2</td>
+<td>lemon</td>
+<td>2020/1/7</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>ここにはいくつかの一般的なパラメータがあります。 <code>header=None</code> は最初の行が列名にならないことを意味します。 <code>index_col</code> はある列またはいくつかの列をインデックスにすることを意味します。インデックスの内容は第3章で詳しく説明します。 <code>usecols</code> は列の集合を読み取ります。デフォルトではすべての列を読み取ります。 <code>parse_dates</code> は時間に変換する必要があります。時系列については第10章で説明します。 <code>nrows</code> 読み取ったデータの行数を示します。これらの引数は、上記の3つの関数で使用できます。</p>
+<div class="highlight"><pre><span></span><code><span class="n">pd</span><span class="o">.</span><span class="n">read_table</span><span class="p">(</span><span class="s1">'../data/my_table.txt'</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+<td>col1</td>
+<td>col2</td>
+<td>col3</td>
+<td>col4</td>
+</tr>
+<tr>
+<th>1</th>
+<td>2</td>
+<td>a</td>
+<td>1.4</td>
+<td>apple 2020/1/1</td>
+</tr>
+<tr>
+<th>2</th>
+<td>3</td>
+<td>b</td>
+<td>3.4</td>
+<td>banana 2020/1/2</td>
+</tr>
+<tr>
+<th>3</th>
+<td>6</td>
+<td>c</td>
+<td>2.5</td>
+<td>orange 2020/1/5</td>
+</tr>
+<tr>
+<th>4</th>
+<td>5</td>
+<td>d</td>
+<td>3.2</td>
+<td>lemon 2020/1/7</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight"><pre><span></span><code><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">'../data/my_csv.csv'</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="p">[</span><span class="s1">'col1'</span><span class="p">,</span> <span class="s1">'col2'</span><span class="p">])</span>
+</code></pre></div>
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th></th>
+<th>col3</th>
+<th>col4</th>
+<th>col5</th>
+</tr>
+<tr>
+<th>col1</th>
+<th>col2</th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>2</th>
+<th>a</th>
+<td>1.4</td>
+<td>apple</td>
+<td>2020/1/1</td>
+</tr>
+<tr>
+<th>3</th>
+<th>b</th>
+<td>3.4</td>
+<td>banana</td>
+<td>2020/1/2</td>
+</tr>
+<tr>
+<th>6</th>
+<th>c</th>
+<td>2.5</td>
+<td>orange</td>
+<td>2020/1/5</td>
+</tr>
+<tr>
+<th>5</th>
+<th>d</th>
+<td>3.2</td>
+<td>lemon</td>
+<td>2020/1/7</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight"><pre><span></span><code><span class="n">pd</span><span class="o">.</span><span class="n">read_table</span><span class="p">(</span><span class="s1">'../data/my_table.txt'</span><span class="p">,</span> <span class="n">usecols</span><span class="o">=</span><span class="p">[</span><span class="s1">'col1'</span><span class="p">,</span> <span class="s1">'col2'</span><span class="p">])</span>
+</code></pre></div>
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>col1</th>
+<th>col2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+<td>2</td>
+<td>a</td>
+</tr>
+<tr>
+<th>1</th>
+<td>3</td>
+<td>b</td>
+</tr>
+<tr>
+<th>2</th>
+<td>6</td>
+<td>c</td>
+</tr>
+<tr>
+<th>3</th>
+<td>5</td>
+<td>d</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight"><pre><span></span><code><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">'../data/my_csv.csv'</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s1">'col5'</span><span class="p">])</span>
+</code></pre></div>
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>col1</th>
+<th>col2</th>
+<th>col3</th>
+<th>col4</th>
+<th>col5</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+<td>2</td>
+<td>a</td>
+<td>1.4</td>
+<td>apple</td>
+<td>2020-01-01</td>
+</tr>
+<tr>
+<th>1</th>
+<td>3</td>
+<td>b</td>
+<td>3.4</td>
+<td>banana</td>
+<td>2020-01-02</td>
+</tr>
+<tr>
+<th>2</th>
+<td>6</td>
+<td>c</td>
+<td>2.5</td>
+<td>orange</td>
+<td>2020-01-05</td>
+</tr>
+<tr>
+<th>3</th>
+<td>5</td>
+<td>d</td>
+<td>3.2</td>
+<td>lemon</td>
+<td>2020-01-07</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight"><pre><span></span><code><span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s1">'../data/my_excel.xlsx'</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</code></pre></div>
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>col1</th>
+<th>col2</th>
+<th>col3</th>
+<th>col4</th>
+<th>col5</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+<td>2</td>
+<td>a</td>
+<td>1.4</td>
+<td>apple</td>
+<td>2020/1/1</td>
+</tr>
+<tr>
+<th>1</th>
+<td>3</td>
+<td>b</td>
+<td>3.4</td>
+<td>banana</td>
+<td>2020/1/2</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><code>txt</code> ファイルを読み込むとき、区切り文字がスペースではないことがよくあります。 <code>read_table</code> には分割パラメータ <code>sep</code> があり、ユーザーは分割記号をカスタマイズし、 <code>txt</code> データを読み込むことができます。たとえば、次の読み込みテーブルは <code>||||</code> で分割されています：</p>
+<div class="highlight"><pre><span></span><code><span class="n">pd</span><span class="o">.</span><span class="n">read_table</span><span class="p">(</span><span class="s1">'../data/my_table_special_sep.txt'</span><span class="p">)</span>
+</code></pre></div>
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>col1 |||| col2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+<td>TS |||| This is an apple.</td>
+</tr>
+<tr>
+<th>1</th>
+<td>GQ |||| My name is Bob.</td>
+</tr>
+<tr>
+<th>2</th>
+<td>WT |||| Well done!</td>
+</tr>
+<tr>
+<th>3</th>
+<td>PT |||| May I help you?</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>上記の結果は明らかに理想的ではありません。この場合、 <code>sep</code> を使用し、エンジンを <code>python</code> に指定する必要があります。</p>
+<div class="highlight"><pre><span></span><code><span class="n">pd</span><span class="o">.</span><span class="n">read_table</span><span class="p">(</span><span class="s1">'../data/my_table_special_sep.txt'</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">' \|\|\|\| '</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">'python'</span><span class="p">)</span>
+</code></pre></div>
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>col1</th>
+<th>col2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+<td>TS</td>
+<td>This is an apple.</td>
+</tr>
+<tr>
+<th>1</th>
+<td>GQ</td>
+<td>My name is Bob.</td>
+</tr>
+<tr>
+<th>2</th>
+<td>WT</td>
+<td>Well done!</td>
+</tr>
+<tr>
+<th>3</th>
+<td>PT</td>
+<td>May I help you?</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="slide-number">
+<p>2</p>
+</div>
+</div>
+</div>
+</div>
+<div class="slide-container">
+<div class="slide-content" style="">
+<h2>1. ファイルの読み込みと書き込み</h2>
+<h3>1. ファイル読み取り</h3>
+<div class="content">
+<div class="auto-sizing">
+<div class="chunk chunk-paragraph">
+<h4 id="warning-sep">[WARNING] <code>sep</code> は正規引数です</h4>
+<p><code>read_table</code> を使用するときは、パラメータ <code>sep</code> に正規表現が使用されているため、 <code>|</code> を <code>\|</code> にエスケープする必要があります。そうしないと正しい結果を読み取ることができません。正規表現の基本的な内容については、第8章またはその他の関連資料を参照することができる。</p>
+</div>
+</div>
+<div class="slide-number">
+<p>3</p>
+</div>
+</div>
+</div>
+</div>
+<div class="slide-container">
+<div class="slide-content" style="">
+<h2>1. ファイルの読み込みと書き込み</h2>
+<h3>2. データ書き込み</h3>
+<div class="content">
+<div class="auto-sizing">
+<div class="chunk chunk-paragraph">
+<h4 id="end">[END]</h4>
+<p>一般的にデータ書き込みで最も一般的な操作は <code>index</code> を <code>False</code> に設定することです。特にインデックスに特別な意味がない場合、この行動は保存時にインデックスを除去することができます。</p>
+<div class="highlight"><pre><span></span><code><span class="n">df_csv</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">'../data/my_csv_saved.csv'</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">df_excel</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="s1">'../data/my_excel_saved.xlsx'</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</code></pre></div>
+<p><code>to_table</code> 関数は <code>pandas</code> で定義されていませんが、 <code>to_csv</code> は <code>txt</code> ファイルとして保存でき、カスタム区切り文字、一般的なタブ文字 <code>\t</code> 分割が可能です：</p>
+<div class="highlight"><pre><span></span><code><span class="n">df_txt</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">'../data/my_txt_saved.txt'</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">'</span><span class="se">\t</span><span class="s1">'</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</code></pre></div>
+<p>テーブルを <code>markdown</code> と <code>latex</code> 言語にすばやく変換したい場合は、 <code>to_markdown</code> と <code>to_latex</code> 関数を使用してください。ここには <code>tabulate</code> パッケージが必要です。</p>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">df_csv</span><span class="o">.</span><span class="n">to_markdown</span><span class="p">())</span>
+</code></pre></div>
+<pre><code>|    |   col1 | col2   |   col3 | col4   | col5     |
+|---:|-------:|:-------|-------:|:-------|:---------|
+|  0 |      2 | a      |    1.4 | apple  | 2020/1/1 |
+|  1 |      3 | b      |    3.4 | banana | 2020/1/2 |
+|  2 |      6 | c      |    2.5 | orange | 2020/1/5 |
+|  3 |      5 | d      |    3.2 | lemon  | 2020/1/7 |
+</code></pre>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">df_csv</span><span class="o">.</span><span class="n">to_latex</span><span class="p">())</span>
+</code></pre></div>
+<pre><code>\begin{tabular}{lrlrll}\toprule{} &amp;  col1 &amp; col2 &amp;  col3 &amp;    col4 &amp;      col5 \\\midrule0 &amp;     2 &amp;    a &amp;   1.4 &amp;   apple &amp;  2020/1/1 \\1 &amp;     3 &amp;    b &amp;   3.4 &amp;  banana &amp;  2020/1/2 \\2 &amp;     6 &amp;    c &amp;   2.5 &amp;  orange &amp;  2020/1/5 \\3 &amp;     5 &amp;    d &amp;   3.2 &amp;   lemon &amp;  2020/1/7 \\\bottomrule\end{tabular}
+</code></pre>
+</div>
+</div>
+<div class="slide-number">
+<p>4</p>
+</div>
+</div>
+</div>
+</div>
+<div class="slide-container">
+<div class="slide-content" style="">
+<h2>二、基本的なデータ構造</h2>
+<div class="content">
+<div class="auto-sizing">
+<div class="chunk chunk-paragraph">
+<p><code>pandas</code> には、1次元 <code>values</code> を格納する <code>Series</code> と2次元 <code>values</code> を格納する <code>DataFrame</code> の2つの基本的なデータ格納構造があり、この2つの構造には多くの属性とメソッドが定義されています。</p>
+</div>
+</div>
+<div class="slide-number">
+<p>5</p>
+</div>
+</div>
+</div>
+</div>
+<div class="slide-container">
+<div class="slide-content" style="">
+<h2>二、基本的なデータ構造</h2>
+<h3>1. Series</h3>
+<div class="content">
+<div class="auto-sizing">
+<div class="chunk chunk-paragraph">
+<p><code>Series</code> は一般的に、シーケンスの値 <code>data</code>、インデックス <code>index</code>、ストレージタイプ <code>dtype</code>、シーケンスの名前 <code>name</code> の4つの部分から構成されています。その中で、インデックスはその名前を指定することもでき、デフォルトは空です。</p>
+<div class="highlight"><pre><span></span><code><span class="n">s</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="s1">'a'</span><span class="p">,</span> <span class="p">{</span><span class="s1">'dic1'</span><span class="p">:</span><span class="mi">5</span><span class="p">}],</span>
+              <span class="n">index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">([</span><span class="s1">'id1'</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="s1">'third'</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">'my_idx'</span><span class="p">),</span>
+              <span class="n">dtype</span> <span class="o">=</span> <span class="s1">'object'</span><span class="p">,</span>
+              <span class="n">name</span> <span class="o">=</span> <span class="s1">'my_name'</span><span class="p">)</span>
+<span class="n">s</span>
+</code></pre></div>
+<pre><code>my_idxid1              10020                 athird    {'dic1': 5}Name: my_name, dtype: object
+</code></pre>
+</div>
+</div>
+<div class="slide-number">
+<p>6</p>
+</div>
+</div>
+</div>
+</div>
+<div class="slide-container">
+<div class="slide-content" style="">
+<h2>二、基本的なデータ構造</h2>
+<h3>1. Series</h3>
+<div class="content">
+<div class="auto-sizing">
+<div class="chunk chunk-paragraph">
+<h4 id="note-object">[NOTE] <code>object</code> タイプ</h4>
+<p><code>object</code> は、上記の例で整数、文字列、および <code>Python</code> の辞書データ構造が格納されているように、混合型を表します。また、現在 <code>pandas</code> は純粋な文字列シーケンスもデフォルトで <code>object</code> 型のシーケンスとみなされていますが、それは <code>string</code> 型で保存することもできます。テキストシーケンスの内容は第8章で說明します。</p>
+</div>
+</div>
+<div class="slide-number">
+<p>7</p>
+</div>
+</div>
+</div>
+</div>
+<div class="slide-container">
+<div class="slide-content" style="">
+<h2>二、基本的なデータ構造</h2>
+<h3>1. Series</h3>
+<div class="content">
+<div class="auto-sizing">
+<div class="chunk chunk-paragraph">
+<h4 id="end">[END]</h4>
+<p>これらのプロパティについては、.以下の方法で取得します：</p>
+<div class="highlight"><pre><span></span><code><span class="n">s</span><span class="o">.</span><span class="n">values</span>
+</code></pre></div>
+<pre><code>array([100, 'a', {'dic1': 5}], dtype=object)
+</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">s</span><span class="o">.</span><span class="n">index</span>
+</code></pre></div>
+<pre><code>Index(['id1', 20, 'third'], dtype='object', name='my_idx')
+</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">s</span><span class="o">.</span><span class="n">dtype</span>
+</code></pre></div>
+<pre><code>dtype('O')
+</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">s</span><span class="o">.</span><span class="n">name</span>
+</code></pre></div>
+<pre><code>'my_name'
+</code></pre>
+<p><code>.shape</code> を使用してシーケンスの長さを取得できます：</p>
+<div class="highlight"><pre><span></span><code><span class="n">s</span><span class="o">.</span><span class="n">shape</span>
+</code></pre></div>
+<pre><code>(3,)
+</code></pre>
+<p>インデックスは <code>pandas</code> における最も重要な概念の1つであり、第3章で詳細に說明されます。単一のインデックスに対応する値を取り出したい場合は、 <code>[index_item]</code> で取り出すことができます。</p>
+</div>
+</div>
+<div class="slide-number">
+<p>8</p>
+</div>
+</div>
+</div>
+</div>
+<div class="slide-container">
+<div class="slide-content" style="">
+<h2>二、基本的なデータ構造</h2>
+<h3>2. DataFrame</h3>
+<div class="content">
+<div class="auto-sizing">
+<div class="chunk chunk-paragraph">
+<p><code>DataFrame</code> <code>Series</code> にカラムインデックスが追加され、データフレームは2次元 <code>data</code> と行列インデックスで構成できます。</p>
+<div class="highlight"><pre><span></span><code><span class="n">data</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="s1">'a'</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="s1">'b'</span><span class="p">,</span> <span class="mf">2.2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="s1">'c'</span><span class="p">,</span> <span class="mf">3.2</span><span class="p">]]</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">,</span>
+                  <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'row_</span><span class="si">%d</span><span class="s1">'</span><span class="o">%</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)],</span>
+                  <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">'col_0'</span><span class="p">,</span> <span class="s1">'col_1'</span><span class="p">,</span> <span class="s1">'col_2'</span><span class="p">])</span>
+<span class="n">df</span>
+</code></pre></div>
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>col_0</th>
+<th>col_1</th>
+<th>col_2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>row_0</th>
+<td>1</td>
+<td>a</td>
+<td>1.2</td>
+</tr>
+<tr>
+<th>row_1</th>
+<td>2</td>
+<td>b</td>
+<td>2.2</td>
+</tr>
+<tr>
+<th>row_2</th>
+<td>3</td>
+<td>c</td>
+<td>3.2</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>しかし、一般的には、列のインデックス名からデータへのマッピングを使用してデータフレームを構築し、行のインデックスを追加します：</p>
+<div class="highlight"><pre><span></span><code><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'col_0'</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span>
+                          <span class="s1">'col_1'</span><span class="p">:</span><span class="nb">list</span><span class="p">(</span><span class="s1">'abc'</span><span class="p">),</span>
+                          <span class="s1">'col_2'</span><span class="p">:</span> <span class="p">[</span><span class="mf">1.2</span><span class="p">,</span> <span class="mf">2.2</span><span class="p">,</span> <span class="mf">3.2</span><span class="p">]},</span>
+                  <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'row_</span><span class="si">%d</span><span class="s1">'</span><span class="o">%</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)])</span>
+<span class="n">df</span>
+</code></pre></div>
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>col_0</th>
+<th>col_1</th>
+<th>col_2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>row_0</th>
+<td>1</td>
+<td>a</td>
+<td>1.2</td>
+</tr>
+<tr>
+<th>row_1</th>
+<td>2</td>
+<td>b</td>
+<td>2.2</td>
+</tr>
+<tr>
+<th>row_2</th>
+<td>3</td>
+<td>c</td>
+<td>3.2</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>このマッピングのため、 <code>DataFrame</code> では、 <code>[col_name]</code> と <code>[col_list]</code> で対応する列と複数の列からなるテーブルを取り出すことができ、結果はそれぞれ <code>Series</code> と <code>DataFrame</code> になります：</p>
+<div class="highlight"><pre><span></span><code><span class="n">df</span><span class="p">[</span><span class="s1">'col_0'</span><span class="p">]</span>
+</code></pre></div>
+<pre><code>row_0    1row_1    2row_2    3Name: col_0, dtype: int64
+</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">df</span><span class="p">[[</span><span class="s1">'col_0'</span><span class="p">,</span> <span class="s1">'col_1'</span><span class="p">]]</span>
+</code></pre></div>
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>col_0</th>
+<th>col_1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>row_0</th>
+<td>1</td>
+<td>a</td>
+</tr>
+<tr>
+<th>row_1</th>
+<td>2</td>
+<td>b</td>
+</tr>
+<tr>
+<th>row_2</th>
+<td>3</td>
+<td>c</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><code>Series</code> と同様に、データフレームに対応する属性を取り出すことができます：</p>
+<div class="highlight"><pre><span></span><code><span class="n">df</span><span class="o">.</span><span class="n">values</span>
+</code></pre></div>
+<pre><code>array([[1, 'a', 1.2],
+       [2, 'b', 2.2],[3, 'c', 3.2]], dtype=object)
+</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">df</span><span class="o">.</span><span class="n">index</span>
+</code></pre></div>
+<pre><code>Index(['row_0', 'row_1', 'row_2'], dtype='object')
+</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">df</span><span class="o">.</span><span class="n">columns</span>
+</code></pre></div>
+<pre><code>Index(['col_0', 'col_1', 'col_2'], dtype='object')
+</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">df</span><span class="o">.</span><span class="n">dtypes</span> <span class="c1"># 返回的是值为相应列数据类型的Series</span>
+</code></pre></div>
+<pre><code>col_0      int64col_1     objectcol_2    float64dtype: object
+</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">df</span><span class="o">.</span><span class="n">shape</span>
+</code></pre></div>
+<pre><code>(3, 3)
+</code></pre>
+<p><code>.T</code> は <code>DataFrame</code> を転置することができます：</p>
+<div class="highlight"><pre><span></span><code><span class="n">df</span><span class="o">.</span><span class="n">T</span>
+</code></pre></div>
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>row_0</th>
+<th>row_1</th>
+<th>row_2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>col_0</th>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+</tr>
+<tr>
+<th>col_1</th>
+<td>a</td>
+<td>b</td>
+<td>c</td>
+</tr>
+<tr>
+<th>col_2</th>
+<td>1.2</td>
+<td>2.2</td>
+<td>3.2</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="slide-number">
+<p>9</p>
+</div>
+</div>
+</div>
+</div>
+<div class="slide-container">
+<div class="slide-content" style="">
+<h2>三、よく使われる基本関数</h2>
+<div class="content">
+<div class="auto-sizing">
+<div class="chunk chunk-paragraph">
+<p>例を示すために、次のセクションおよび残りの章では、4校の生徒の身体検査個人情報を記録した <code>learn_pandas.csv</code> の仮想データセットを使用します。</p>
+<div class="highlight"><pre><span></span><code><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">'../data/learn_pandas.csv'</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">columns</span>
+</code></pre></div>
+<pre><code>Index(['School', 'Grade', 'Name', 'Gender', 'Height', 'Weight', 'Transfer',
+       'Test_Number', 'Test_Date', 'Time_Record'],
+      dtype='object')
+</code></pre>
+<p>上記の列名は順に学校、学年、氏名、性別、身長、体重、転系生の有無、体験回数、テスト時間、1000メートルの成績を表しており、本章ではその中の最初の7列のみを使用すればよい。</p>
+<div class="highlight"><pre><span></span><code><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">[:</span><span class="mi">7</span><span class="p">]]</span>
+</code></pre></div>
+</div>
+</div>
+<div class="slide-number">
+<p>10</p>
+</div>
+</div>
+</div>
+</div>
+<div class="slide-container">
+<div class="slide-content" style="">
+<h2>三、よく使われる基本関数</h2>
+<h3>1. 要約関数</h3>
+<div class="content">
+<div class="auto-sizing">
+<div class="chunk chunk-paragraph">
+<p><code>head, tail</code> 関数は、テーブルまたはシーケンスの前の <code>n</code> 行と後の <code>n</code> 行をそれぞれ返します。ここで、 <code>n</code> はデフォルトで5になります：</p>
+<div class="highlight"><pre><span></span><code><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</code></pre></div>
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>School</th>
+<th>Grade</th>
+<th>Name</th>
+<th>Gender</th>
+<th>Height</th>
+<th>Weight</th>
+<th>Transfer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+<td>Shanghai Jiao Tong University</td>
+<td>Freshman</td>
+<td>Gaopeng Yang</td>
+<td>Female</td>
+<td>158.9</td>
+<td>46.0</td>
+<td>N</td>
+</tr>
+<tr>
+<th>1</th>
+<td>Peking University</td>
+<td>Freshman</td>
+<td>Changqiang You</td>
+<td>Male</td>
+<td>166.5</td>
+<td>70.0</td>
+<td>N</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight"><pre><span></span><code><span class="n">df</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</code></pre></div>
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>School</th>
+<th>Grade</th>
+<th>Name</th>
+<th>Gender</th>
+<th>Height</th>
+<th>Weight</th>
+<th>Transfer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>197</th>
+<td>Shanghai Jiao Tong University</td>
+<td>Senior</td>
+<td>Chengqiang Chu</td>
+<td>Female</td>
+<td>153.9</td>
+<td>45.0</td>
+<td>N</td>
+</tr>
+<tr>
+<th>198</th>
+<td>Shanghai Jiao Tong University</td>
+<td>Senior</td>
+<td>Chengmei Shen</td>
+<td>Male</td>
+<td>175.3</td>
+<td>71.0</td>
+<td>N</td>
+</tr>
+<tr>
+<th>199</th>
+<td>Tsinghua University</td>
+<td>Sophomore</td>
+<td>Chunpeng Lv</td>
+<td>Male</td>
+<td>155.7</td>
+<td>51.0</td>
+<td>N</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><code>info, describe</code> テーブルの情報概要とテーブルの数値列に対応する主な統計をそれぞれ返します：</p>
+<div class="highlight"><pre><span></span><code><span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</code></pre></div>
+<pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 200 entries, 0 to 199Data columns (total 7 columns):
+ #   Column    Non-Null Count  Dtype  
+---  ------    --------------  -----  
+ 0   School    200 non-null    object 
+ 1   Grade     200 non-null    object 
+ 2   Name      200 non-null    object 
+ 3   Gender    200 non-null    object 
+ 4   Height    183 non-null    float64
+ 5   Weight    189 non-null    float64
+ 6   Transfer  188 non-null    object 
+dtypes: float64(2), object(5)
+memory usage: 11.1+ KB
+</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">df</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</code></pre></div>
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>Height</th>
+<th>Weight</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>count</th>
+<td>183.000000</td>
+<td>189.000000</td>
+</tr>
+<tr>
+<th>mean</th>
+<td>163.218033</td>
+<td>55.015873</td>
+</tr>
+<tr>
+<th>std</th>
+<td>8.608879</td>
+<td>12.824294</td>
+</tr>
+<tr>
+<th>min</th>
+<td>145.400000</td>
+<td>34.000000</td>
+</tr>
+<tr>
+<th>25%</th>
+<td>157.150000</td>
+<td>46.000000</td>
+</tr>
+<tr>
+<th>50%</th>
+<td>161.900000</td>
+<td>51.000000</td>
+</tr>
+<tr>
+<th>75%</th>
+<td>167.500000</td>
+<td>65.000000</td>
+</tr>
+<tr>
+<th>max</th>
+<td>193.900000</td>
+<td>89.000000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="slide-number">
+<p>11</p>
+</div>
+</div>
+</div>
+</div>
+<div class="slide-container">
+<div class="slide-content" style="">
+<h2>三、よく使われる基本関数</h2>
+<h3>1. 要約関数</h3>
+<div class="content">
+<div class="auto-sizing">
+<div class="chunk chunk-paragraph">
+<h4 id="note">[NOTE] より包括的なデータまとめ</h4>
+<p><code>info, describe</code> は少ない情報を表示することしかできませんが、データセットの包括的かつ効果的な観察を行いたい場合、特に列が多い場合は、<a href="https://pandas-profiling.github.io/pandas-profiling/docs/">pandas-profiling</a>パッケージを使用することをお勧めします。これは第11章で再び取り上げられます。</p>
+</div>
+</div>
+<div class="slide-number">
+<p>12</p>
+</div>
+</div>
+</div>
+</div>
+<div class="slide-container">
+<div class="slide-content" style="">
+<h2>三、よく使われる基本関数</h2>
+<h3>2. 特徴統計関数</h3>
+<div class="content">
+<div class="auto-sizing">
+<div class="chunk chunk-paragraph">
+<h4 id="end">[END]</h4>
+<p>多くの統計関数は <code>Series</code> と <code>DataFrame</code> で定義されており、最も一般的なのは <code>sum, mean, median, var, std, max, min</code> です。たとえば、デモンストレーションのために「身長」と「体重」列を選択します：</p>
+<div class="highlight"><pre><span></span><code><span class="n">df_demo</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">'Height'</span><span class="p">,</span> <span class="s1">'Weight'</span><span class="p">]]</span>
+<span class="n">df_demo</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</code></pre></div>
+<pre><code>Height    163.218033Weight     55.015873dtype: float64
+</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">df_demo</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+</code></pre></div>
+<pre><code>Height    193.9Weight     89.0dtype: float64
+</code></pre>
+<p>さらに、 <code>quantile, count, idxmax</code> という3つの関数を紹介します。これらはそれぞれ分位数、欠落していない値の数、最大値に対応するインデックスを返します：</p>
+<div class="highlight"><pre><span></span><code><span class="n">df_demo</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.75</span><span class="p">)</span>
+</code></pre></div>
+<pre><code>Height    167.5Weight     65.0Name: 0.75, dtype: float64
+</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">df_demo</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+</code></pre></div>
+<pre><code>Height    183Weight    189dtype: int64
+</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">df_demo</span><span class="o">.</span><span class="n">idxmax</span><span class="p">()</span> <span class="c1"># idxmin是对应的函数</span>
+</code></pre></div>
+<pre><code>Height    193Weight      2dtype: int64
+</code></pre>
+<p>これらのすべての関数は、操作後にスカラーを返すため、集約関数とも呼ばれます。これらの関数は共通引数 <code>axis</code> を持っています。デフォルトではカラムごとに集約するために0に設定されています。1に設定されている場合は、行ごとに集約することになります：</p>
+<div class="highlight"><pre><span></span><code><span class="n">df_demo</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span> <span class="c1"># 在这个数据集上体重和身高的均值并没有意义</span>
+</code></pre></div>
+<pre><code>0    102.451    118.252    138.953     41.004    124.00dtype: float64
+</code></pre>
+</div>
+</div>
+<div class="slide-number">
+<p>13</p>
+</div>
+</div>
+</div>
+</div>
+<div class="slide-container">
+<div class="slide-content" style="">
+<h2>三、よく使われる基本関数</h2>
+<h3>3. ユニーク値関数</h3>
+<div class="content">
+<div class="auto-sizing">
+<div class="chunk chunk-paragraph">
+<p>シーケンスに <code>unique</code> と <code>nunique</code> を使用すると、それぞれ一意の値のリストと一意の値の数が得られます：</p>
+<div class="highlight"><pre><span></span><code><span class="n">df</span><span class="p">[</span><span class="s1">'School'</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+</code></pre></div>
+<pre><code>array(['Shanghai Jiao Tong University', 'Peking University',
+       'Fudan University', 'Tsinghua University'], dtype=object)
+</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">df</span><span class="p">[</span><span class="s1">'School'</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span>
+</code></pre></div>
+<pre><code>4
+</code></pre>
+<p><code>value_counts</code> 一意の値とそれに対応する頻度を得ることができます：</p>
+<div class="highlight"><pre><span></span><code><span class="n">df</span><span class="p">[</span><span class="s1">'School'</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</code></pre></div>
+<pre><code>Tsinghua University              69Shanghai Jiao Tong University    57Fudan University                 40Peking University                34Name: School, dtype: int64
+</code></pre>
+<p>複数の列の組み合わせの一意の値を観察したい場合は、 <code>drop_duplicates</code> を使用します。キーパラメータは <code>keep</code> で、デフォルト値 <code>first</code> は各組み合わせの最初の出現行を保持すること、 <code>last</code> は最後の出現行を保持すること、 <code>False</code> はすべての繰り返し組み合わせの行を除去することを意味します。</p>
+<div class="highlight"><pre><span></span><code><span class="n">df_demo</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">'Gender'</span><span class="p">,</span><span class="s1">'Transfer'</span><span class="p">,</span><span class="s1">'Name'</span><span class="p">]]</span>
+<span class="n">df_demo</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">([</span><span class="s1">'Gender'</span><span class="p">,</span> <span class="s1">'Transfer'</span><span class="p">])</span>
+</code></pre></div>
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>Gender</th>
+<th>Transfer</th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+<td>Female</td>
+<td>N</td>
+<td>Gaopeng Yang</td>
+</tr>
+<tr>
+<th>1</th>
+<td>Male</td>
+<td>N</td>
+<td>Changqiang You</td>
+</tr>
+<tr>
+<th>12</th>
+<td>Female</td>
+<td>NaN</td>
+<td>Peng You</td>
+</tr>
+<tr>
+<th>21</th>
+<td>Male</td>
+<td>NaN</td>
+<td>Xiaopeng Shen</td>
+</tr>
+<tr>
+<th>36</th>
+<td>Male</td>
+<td>Y</td>
+<td>Xiaojuan Qin</td>
+</tr>
+<tr>
+<th>43</th>
+<td>Female</td>
+<td>Y</td>
+<td>Gaoli Feng</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight"><pre><span></span><code><span class="n">df_demo</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">([</span><span class="s1">'Gender'</span><span class="p">,</span> <span class="s1">'Transfer'</span><span class="p">],</span> <span class="n">keep</span><span class="o">=</span><span class="s1">'last'</span><span class="p">)</span>
+</code></pre></div>
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>Gender</th>
+<th>Transfer</th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>147</th>
+<td>Male</td>
+<td>NaN</td>
+<td>Juan You</td>
+</tr>
+<tr>
+<th>150</th>
+<td>Male</td>
+<td>Y</td>
+<td>Chengpeng You</td>
+</tr>
+<tr>
+<th>169</th>
+<td>Female</td>
+<td>Y</td>
+<td>Chengquan Qin</td>
+</tr>
+<tr>
+<th>194</th>
+<td>Female</td>
+<td>NaN</td>
+<td>Yanmei Qian</td>
+</tr>
+<tr>
+<th>197</th>
+<td>Female</td>
+<td>N</td>
+<td>Chengqiang Chu</td>
+</tr>
+<tr>
+<th>199</th>
+<td>Male</td>
+<td>N</td>
+<td>Chunpeng Lv</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight"><pre><span></span><code><span class="n">df_demo</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">([</span><span class="s1">'Name'</span><span class="p">,</span> <span class="s1">'Gender'</span><span class="p">],</span> <span class="n">keep</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span> <span class="c1"># 保留只出现过一次的性别和姓名组合</span>
+</code></pre></div>
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>Gender</th>
+<th>Transfer</th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+<td>Female</td>
+<td>N</td>
+<td>Gaopeng Yang</td>
+</tr>
+<tr>
+<th>1</th>
+<td>Male</td>
+<td>N</td>
+<td>Changqiang You</td>
+</tr>
+<tr>
+<th>2</th>
+<td>Male</td>
+<td>N</td>
+<td>Mei Sun</td>
+</tr>
+<tr>
+<th>4</th>
+<td>Male</td>
+<td>N</td>
+<td>Gaojuan You</td>
+</tr>
+<tr>
+<th>5</th>
+<td>Female</td>
+<td>N</td>
+<td>Xiaoli Qian</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight"><pre><span></span><code><span class="n">df</span><span class="p">[</span><span class="s1">'School'</span><span class="p">]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span> <span class="c1"># 在Series上也可以使用</span>
+</code></pre></div>
+<pre><code>0    Shanghai Jiao Tong University1                Peking University3                 Fudan University5              Tsinghua UniversityName: School, dtype: object
+</code></pre>
+<p>さらに、 <code>duplicated</code> と <code>drop_duplicates</code> は同様の机能を持っていますが、前者は一意の値であるかどうかのブールリストを返し、 <code>keep</code> 引数は後者と同じです。返されるシーケンスは、繰り返し要素を <code>True</code>、そうでなければ <code>False</code> に設定します。 <code>drop_duplicates</code> は、 <code>duplicated</code> が <code>True</code> の対応する行を除去することに等しい。</p>
+<div class="highlight"><pre><span></span><code><span class="n">df_demo</span><span class="o">.</span><span class="n">duplicated</span><span class="p">([</span><span class="s1">'Gender'</span><span class="p">,</span> <span class="s1">'Transfer'</span><span class="p">])</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div>
+<pre><code>0    False1    False2     True3     True4     Truedtype: bool
+</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">df</span><span class="p">[</span><span class="s1">'School'</span><span class="p">]</span><span class="o">.</span><span class="n">duplicated</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">()</span> <span class="c1"># 在Series上也可以使用</span>
+</code></pre></div>
+<pre><code>0    False1    False2     True3    False4     TrueName: School, dtype: bool
+</code></pre>
+</div>
+</div>
+<div class="slide-number">
+<p>14</p>
+</div>
+</div>
+</div>
+</div>
+<div class="slide-container">
+<div class="slide-content" style="">
+<h2>三、よく使われる基本関数</h2>
+<h3>4. 置換関数</h3>
+<div class="content">
+<div class="auto-sizing">
+<div class="chunk chunk-paragraph">
+<p>一般的に、置換はカラムに対して行われるので、以下の例は <code>Series</code> で例を挙げます。 <code>pandas</code> の置換関数は、マッピング置換、論理置換、数値置換の3種類にまとめることができます。マッピング置換には、 <code>replace</code> メソッド、第8章の <code>str.replace</code> メソッド、および第9章の <code>cat.codes</code> メソッドが含まれています。ここでは、 <code>replace</code> の使用方法について説明します。</p>
+<p><code>replace</code> では、辞書構造を使用するか、2つのリストを渡すことによって置換できます。</p>
+<div class="highlight"><pre><span></span><code><span class="n">df</span><span class="p">[</span><span class="s1">'Gender'</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="s1">'Female'</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s1">'Male'</span><span class="p">:</span><span class="mi">1</span><span class="p">})</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div>
+<pre><code>0    01    12    13    04    1Name: Gender, dtype: int64
+</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">df</span><span class="p">[</span><span class="s1">'Gender'</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">([</span><span class="s1">'Female'</span><span class="p">,</span> <span class="s1">'Male'</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div>
+<pre><code>0    01    12    13    04    1Name: Gender, dtype: int64
+</code></pre>
+<p>さらに、 <code>replace</code> 特別な方向置換があります。 <code>method</code> パラメータを <code>ffill</code> と指定すると、直前の置換されていない値を置き換え、 <code>bfill</code> を指定すると、直前の置換されていない値を置き換えることができます。次の例からわかるように、それらの結果は異なります。</p>
+<div class="highlight"><pre><span></span><code><span class="n">s</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">'a'</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'b'</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'a'</span><span class="p">])</span>
+<span class="n">s</span><span class="o">.</span><span class="n">replace</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">method</span><span class="o">=</span><span class="s1">'ffill'</span><span class="p">)</span>
+</code></pre></div>
+<pre><code>0    a1    a2    b3    b4    b5    b6    adtype: object
+</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">s</span><span class="o">.</span><span class="n">replace</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">method</span><span class="o">=</span><span class="s1">'bfill'</span><span class="p">)</span>
+</code></pre></div>
+<pre><code>0    a1    b2    b3    a4    a5    a6    adtype: object
+</code></pre>
+</div>
+</div>
+<div class="slide-number">
+<p>15</p>
+</div>
+</div>
+</div>
+</div>
+<div class="slide-container">
+<div class="slide-content" style="">
+<h2>三、よく使われる基本関数</h2>
+<h3>4. 置換関数</h3>
+<div class="content">
+<div class="auto-sizing">
+<div class="chunk chunk-paragraph">
+<h4 id="warning-strreplace">[WARNING] 正規置換は <code>str.replace</code> を使用してください。</h4>
+<p>正規置換は <code>replace</code> で使用できますが、現在のバージョンでは <code>string</code> タイプの正規置換には <code>bug</code> が存在していますので、必要な場合は、 <code>str.replace</code> を選択して置換してください。具体的な方法は第8章で説明します。</p>
+</div>
+</div>
+<div class="slide-number">
+<p>16</p>
+</div>
+</div>
+</div>
+</div>
+<div class="slide-container">
+<div class="slide-content" style="">
+<h2>三、よく使われる基本関数</h2>
+<h3>4. 置換関数</h3>
+<div class="content">
+<div class="auto-sizing">
+<div class="chunk chunk-paragraph">
+<h4 id="end">[END]</h4>
+<p>論理置換には、完全に対称な <code>where</code> と <code>mask</code> 関数が含まれます。 <code>where</code> 関数は、受信条件 <code>False</code> の対応する行で置換し、 <code>mask</code> の対応する行で置換し、置換値が指定されていない場合は、欠落した値で置換します。</p>
+<div class="highlight"><pre><span></span><code><span class="n">s</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mf">1.2345</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="o">-</span><span class="mi">50</span><span class="p">])</span>
+<span class="n">s</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">s</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)</span>
+</code></pre></div>
+<pre><code>0    -1.01     NaN2     NaN3   -50.0dtype: float64
+</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">s</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">s</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+</code></pre></div>
+<pre><code>0     -1.01    100.02    100.03    -50.0dtype: float64
+</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">s</span><span class="o">.</span><span class="n">mask</span><span class="p">(</span><span class="n">s</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)</span>
+</code></pre></div>
+<pre><code>0         NaN1      1.23452    100.00003         NaNdtype: float64
+</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">s</span><span class="o">.</span><span class="n">mask</span><span class="p">(</span><span class="n">s</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">50</span><span class="p">)</span>
+</code></pre></div>
+<pre><code>0    -50.00001      1.23452    100.00003    -50.0000dtype: float64
+</code></pre>
+<p>送信される条件は、呼び出された <code>Series</code> インデックスと一致するブールシーケンスであればよいことに注意してください。</p>
+<div class="highlight"><pre><span></span><code><span class="n">s_condition</span><span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="kc">True</span><span class="p">,</span><span class="kc">False</span><span class="p">,</span><span class="kc">False</span><span class="p">,</span><span class="kc">True</span><span class="p">],</span><span class="n">index</span><span class="o">=</span><span class="n">s</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+<span class="n">s</span><span class="o">.</span><span class="n">mask</span><span class="p">(</span><span class="n">s_condition</span><span class="p">,</span> <span class="o">-</span><span class="mi">50</span><span class="p">)</span>
+</code></pre></div>
+<pre><code>0    -50.00001      1.23452    100.00003    -50.0000dtype: float64
+</code></pre>
+<p>数値置換には、所定の精度で切り捨て、絶対値取り、切り捨てを表す <code>round, abs, clip</code> メソッドが含まれています：</p>
+<div class="highlight"><pre><span></span><code><span class="n">s</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mf">1.2345</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="o">-</span><span class="mi">50</span><span class="p">])</span>
+<span class="n">s</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</code></pre></div>
+<pre><code>0     -1.001      1.232    100.003    -50.00dtype: float64
+</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">s</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span>
+</code></pre></div>
+<pre><code>0      1.00001      1.23452    100.00003     50.0000dtype: float64
+</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">s</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="c1"># 前两个数分别表示上下截断边界</span>
+</code></pre></div>
+<pre><code>0    0.00001    1.23452    2.00003    0.0000dtype: float64
+</code></pre>
+</div>
+</div>
+<div class="slide-number">
+<p>17</p>
+</div>
+</div>
+</div>
+</div>
+<div class="slide-container">
+<div class="slide-content" style="">
+<h2>三、よく使われる基本関数</h2>
+<h3>4. 置換関数</h3>
+<div class="content">
+<div class="auto-sizing">
+<div class="chunk chunk-paragraph">
+<h4 id="_1">[練習して練習する]</h4>
+<p>clipでは境界を超えたものは境界値にしか切り捨てることができませんが、境界を超えたものをカスタム値に置き換える場合はどうすればいいですか？</p>
+</div>
+</div>
+<div class="slide-number">
+<p>18</p>
+</div>
+</div>
+</div>
+</div>
+<div class="slide-container">
+<div class="slide-content" style="">
+<h2>三、よく使われる基本関数</h2>
+<h3>5. ソート関数</h3>
+<div class="content">
+<div class="auto-sizing">
+<div class="chunk chunk-paragraph">
+<h4 id="end">[END]</h4>
+<p>ソートには2つの方法があります。1つは値ソートであり、もう1つはインデックスソートであり、対応する関数は <code>sort_values</code> と <code>sort_index</code> です。</p>
+<p>ソート関数を実証するために、以下ではまず <code>set_index</code> メソッドを用いて学年と名前の2列をインデックスとし、マルチレベルインデックスの内容とインデックス設定の方法を第3章で詳しく説明する。</p>
+<div class="highlight"><pre><span></span><code><span class="n">df_demo</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">'Grade'</span><span class="p">,</span> <span class="s1">'Name'</span><span class="p">,</span> <span class="s1">'Height'</span><span class="p">,</span> <span class="s1">'Weight'</span><span class="p">]]</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s1">'Grade'</span><span class="p">,</span><span class="s1">'Name'</span><span class="p">])</span>
+<span class="n">df_demo</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</code></pre></div>
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th></th>
+<th>Height</th>
+<th>Weight</th>
+</tr>
+<tr>
+<th>Grade</th>
+<th>Name</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th rowspan="2" valign="top">Freshman</th>
+<th>Gaopeng Yang</th>
+<td>158.9</td>
+<td>46.0</td>
+</tr>
+<tr>
+<th>Changqiang You</th>
+<td>166.5</td>
+<td>70.0</td>
+</tr>
+<tr>
+<th>Senior</th>
+<th>Mei Sun</th>
+<td>188.9</td>
+<td>89.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>身長をソートします。デフォルトのパラメータ <code>ascending=True</code> は昇順です：</p>
+<div class="highlight"><pre><span></span><code><span class="n">df_demo</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">'Height'</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div>
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th></th>
+<th>Height</th>
+<th>Weight</th>
+</tr>
+<tr>
+<th>Grade</th>
+<th>Name</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>Junior</th>
+<th>Xiaoli Chu</th>
+<td>145.4</td>
+<td>34.0</td>
+</tr>
+<tr>
+<th>Senior</th>
+<th>Gaomei Lv</th>
+<td>147.3</td>
+<td>34.0</td>
+</tr>
+<tr>
+<th>Sophomore</th>
+<th>Peng Han</th>
+<td>147.8</td>
+<td>34.0</td>
+</tr>
+<tr>
+<th>Senior</th>
+<th>Changli Lv</th>
+<td>148.7</td>
+<td>41.0</td>
+</tr>
+<tr>
+<th>Sophomore</th>
+<th>Changjuan You</th>
+<td>150.5</td>
+<td>40.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight"><pre><span></span><code><span class="n">df_demo</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">'Height'</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div>
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th></th>
+<th>Height</th>
+<th>Weight</th>
+</tr>
+<tr>
+<th>Grade</th>
+<th>Name</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th rowspan="3" valign="top">Senior</th>
+<th>Xiaoqiang Qin</th>
+<td>193.9</td>
+<td>79.0</td>
+</tr>
+<tr>
+<th>Mei Sun</th>
+<td>188.9</td>
+<td>89.0</td>
+</tr>
+<tr>
+<th>Gaoli Zhao</th>
+<td>186.5</td>
+<td>83.0</td>
+</tr>
+<tr>
+<th>Freshman</th>
+<th>Qiang Han</th>
+<td>185.3</td>
+<td>87.0</td>
+</tr>
+<tr>
+<th>Senior</th>
+<th>Qiang Zheng</th>
+<td>183.9</td>
+<td>87.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>ソートでは、同じ体重の場合、身長をソートし、身長の降順、体重の昇順を維持するなど、複数列のソートの問題がよく発生します：</p>
+<div class="highlight"><pre><span></span><code><span class="n">df_demo</span><span class="o">.</span><span class="n">sort_values</span><span class="p">([</span><span class="s1">'Weight'</span><span class="p">,</span><span class="s1">'Height'</span><span class="p">],</span><span class="n">ascending</span><span class="o">=</span><span class="p">[</span><span class="kc">True</span><span class="p">,</span><span class="kc">False</span><span class="p">])</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div>
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th></th>
+<th>Height</th>
+<th>Weight</th>
+</tr>
+<tr>
+<th>Grade</th>
+<th>Name</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>Sophomore</th>
+<th>Peng Han</th>
+<td>147.8</td>
+<td>34.0</td>
+</tr>
+<tr>
+<th>Senior</th>
+<th>Gaomei Lv</th>
+<td>147.3</td>
+<td>34.0</td>
+</tr>
+<tr>
+<th>Junior</th>
+<th>Xiaoli Chu</th>
+<td>145.4</td>
+<td>34.0</td>
+</tr>
+<tr>
+<th>Sophomore</th>
+<th>Qiang Zhou</th>
+<td>150.5</td>
+<td>36.0</td>
+</tr>
+<tr>
+<th>Freshman</th>
+<th>Yanqiang Xu</th>
+<td>152.4</td>
+<td>38.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>インデックスソートの使用法は値ソートと完全に同じですが、要素の値はインデックスにあり、この場合はインデックスレイヤーの名前またはレイヤー番号を指定し、パラメータ <code>level</code> で表される必要があります。なお、文字列の配列順序はアルファベット順に決まることに注意してください。</p>
+<div class="highlight"><pre><span></span><code><span class="n">df_demo</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="p">[</span><span class="s1">'Grade'</span><span class="p">,</span><span class="s1">'Name'</span><span class="p">],</span><span class="n">ascending</span><span class="o">=</span><span class="p">[</span><span class="kc">True</span><span class="p">,</span><span class="kc">False</span><span class="p">])</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div>
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th></th>
+<th>Height</th>
+<th>Weight</th>
+</tr>
+<tr>
+<th>Grade</th>
+<th>Name</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th rowspan="5" valign="top">Freshman</th>
+<th>Yanquan Wang</th>
+<td>163.5</td>
+<td>55.0</td>
+</tr>
+<tr>
+<th>Yanqiang Xu</th>
+<td>152.4</td>
+<td>38.0</td>
+</tr>
+<tr>
+<th>Yanqiang Feng</th>
+<td>162.3</td>
+<td>51.0</td>
+</tr>
+<tr>
+<th>Yanpeng Lv</th>
+<td>NaN</td>
+<td>65.0</td>
+</tr>
+<tr>
+<th>Yanli Zhang</th>
+<td>165.1</td>
+<td>52.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="slide-number">
+<p>19</p>
+</div>
+</div>
+</div>
+</div>
+<div class="slide-container">
+<div class="slide-content" style="">
+<h2>三、よく使われる基本関数</h2>
+<h3>6. applyメソッド</h3>
+<div class="content">
+<div class="auto-sizing">
+<div class="chunk chunk-paragraph">
+<p><code>apply</code> メソッドは <code>DataFrame</code> の行反復または列反復によく使用され、その <code>axis</code> の意味は小節2の統計集約関数と一致し、 <code>apply</code> の引数は往々にしてシーケンスを入力とする関数です。たとえば、 <code>.mean()</code> の場合、 <code>apply</code> を使用して次のように書くことができます：</p>
+<div class="highlight"><pre><span></span><code><span class="n">df_demo</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">'Height'</span><span class="p">,</span> <span class="s1">'Weight'</span><span class="p">]]</span>
+<span class="k">def</span> <span class="nf">my_mean</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+     <span class="n">res</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+     <span class="k">return</span> <span class="n">res</span>
+<span class="n">df_demo</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">my_mean</span><span class="p">)</span>
+</code></pre></div>
+<pre><code>Height    163.218033Weight     55.015873dtype: float64
+</code></pre>
+<p>同様に、 <code>lambda</code> 式を使って簡潔に書くことができます。ここで <code>x</code> は呼び出された <code>df_demo</code> テーブルに入力されたシーケンスを指します。</p>
+<div class="highlight"><pre><span></span><code><span class="n">df_demo</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+</code></pre></div>
+<pre><code>Height    163.218033Weight     55.015873dtype: float64
+</code></pre>
+<p><code>axis=1</code> を指定すると、行要素の <code>Series</code> が関数に渡されるたびに、結果は以前の行単位の平均値と一致します。</p>
+<div class="highlight"><pre><span></span><code><span class="n">df_demo</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div>
+<pre><code>0    102.451    118.252    138.953     41.004    124.00dtype: float64
+</code></pre>
+<p>ここでもう1つの例を挙げます。 <code>mad</code> 関数は、シーケンスの平均から逸脱した絶対値の大きさの平均を返します。例えば、シーケンス1,3,7,10では、平均値は5.25であり、各要素の逸脱の絶対値は4.25,2.25,1.75,4.75であり、この逸脱シーケンスの平均値は3.25です。次に、増加と体重の <code>apply</code> メトリックを <code>mad</code> 計算します：</p>
+<div class="highlight"><pre><span></span><code><span class="n">df_demo</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:(</span><span class="n">x</span><span class="o">-</span><span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+</code></pre></div>
+<pre><code>Height     6.707229Weight    10.391870dtype: float64
+</code></pre>
+<p>これは、組み込みの <code>mad</code> 関数を使用して計算された結果と一致します。</p>
+<div class="highlight"><pre><span></span><code><span class="n">df_demo</span><span class="o">.</span><span class="n">mad</span><span class="p">()</span>
+</code></pre></div>
+<pre><code>Height     6.707229Weight    10.391870dtype: float64
+</code></pre>
+</div>
+</div>
+<div class="slide-number">
+<p>20</p>
+</div>
+</div>
+</div>
+</div>
+<div class="slide-container">
+<div class="slide-content" style="">
+<h2>三、よく使われる基本関数</h2>
+<h3>6. applyメソッド</h3>
+<div class="content">
+<div class="auto-sizing">
+<div class="chunk chunk-paragraph">
+<h4 id="warning-apply">[WARNING] 慎重に使う <code>apply</code></h4>
+<p>カスタム関数に渡される処理のおかげで、 <code>apply</code> の自由度は高いが、これはパフォーマンスのコストを伴う。一般的に、 <code>pandas</code> の組み込み関数処理と <code>apply</code> を使用して同じタスクを処理するのは、速度が大きく異なりますので、カスタマイズの必要性がある場合にのみ <code>apply</code> を検討してください。</p>
+</div>
+</div>
+<div class="slide-number">
+<p>21</p>
+</div>
+</div>
+</div>
+</div>
+<div class="slide-container">
+<div class="slide-content" style="">
+<h2>三、よく使われる基本関数</h2>
+<h3>6. applyメソッド</h3>
+<div class="content">
+<div class="auto-sizing">
+<div class="chunk chunk-paragraph">
+<h4 id="end">[END]</h4>
+</div>
+</div>
+<div class="slide-number">
+<p>22</p>
+</div>
+</div>
+</div>
+</div>
+<div class="slide-container">
+<div class="slide-content" style="">
+<h2>4. ウィンドウオブジェクト</h2>
+<div class="content">
+<div class="auto-sizing">
+<div class="chunk chunk-paragraph">
+<p><code>pandas</code> には、スライドウィンドウ <code>rolling</code>、拡張ウィンドウ <code>expanding</code>、指数重みウィンドウ <code>ewm</code> の3種類があります。なお、日付オフセットをウィンドウサイズとするスライディングウィンドウについては第10章で説明し、指数重みウィンドウについては本章の練習を参照してください。</p>
+</div>
+</div>
+<div class="slide-number">
+<p>23</p>
+</div>
+</div>
+</div>
+</div>
+<div class="slide-container">
+<div class="slide-content" style="">
+<h2>4. ウィンドウオブジェクト</h2>
+<h3>1. スライドウィンドウオブジェクト</h3>
+<div class="content">
+<div class="auto-sizing">
+<div class="chunk chunk-paragraph">
+<p>スライドウィンドウ関数を使用するには、まずシーケンスに <code>.rolling</code> を使用してスライドウィンドウオブジェクトを取得する必要があります。その最も重要な引数はウィンドウサイズ <code>window</code> です。</p>
+<div class="highlight"><pre><span></span><code><span class="n">s</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span>
+<span class="n">roller</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span> <span class="o">=</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">roller</span>
+</code></pre></div>
+<pre><code>Rolling [window=3,center=False,axis=0]
+</code></pre>
+<p>スライドウィンドウオブジェクトを取得したら、対応する集約関数を使用して計算できます。ウィンドウには現在の行がある要素が含まれていることに注意してください。たとえば、4番目の位置で平均値を計算する場合は、 (1+2+3)/3ではなく (2+3+4)/3を計算する必要があります：</p>
+<div class="highlight"><pre><span></span><code><span class="n">roller</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</code></pre></div>
+<pre><code>0    NaN1    NaN2    2.03    3.04    4.0dtype: float64
+</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">roller</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</code></pre></div>
+<pre><code>0     NaN1     NaN2     6.03     9.04    12.0dtype: float64
+</code></pre>
+<p>スライド相関係数またはスライド共分散の計算については、次のように書くことができます。</p>
+<div class="highlight"><pre><span></span><code><span class="n">s2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span><span class="mi">30</span><span class="p">])</span>
+<span class="n">roller</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">s2</span><span class="p">)</span>
+</code></pre></div>
+<pre><code>0     NaN1     NaN2     2.53     7.04    12.0dtype: float64
+</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">roller</span><span class="o">.</span><span class="n">corr</span><span class="p">(</span><span class="n">s2</span><span class="p">)</span>
+</code></pre></div>
+<pre><code>0         NaN1         NaN2    0.9449113    0.9707254    0.995402dtype: float64
+</code></pre>
+<p>また、 <code>apply</code> を使用してカスタム関数を受信することもサポートされています。受信値は対応するウィンドウの <code>Series</code> です。たとえば、上記の平均関数と同等に表すことができます：</p>
+<div class="highlight"><pre><span></span><code><span class="n">roller</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+</code></pre></div>
+<pre><code>0    NaN1    NaN2    2.03    3.04    4.0dtype: float64
+</code></pre>
+<p><code>shift, diff, pct_change</code> は、共通引数 <code>periods=n</code> で、デフォルトは1であり、方向前の <code>n</code> 番目の要素の値、前方の <code>n</code> 番目の要素との差分（ <code>n</code> 番目の差分とは異なり）、前方の <code>n</code> 番目の要素と比較して成長率を計算します。ここで <code>n</code> は負であり、逆方向の同様の操作を示すことができます。</p>
+<div class="highlight"><pre><span></span><code><span class="n">s</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">15</span><span class="p">])</span>
+<span class="n">s</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</code></pre></div>
+<pre><code>0    NaN1    NaN2    1.03    3.04    6.0dtype: float64
+</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">s</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</code></pre></div>
+<pre><code>0     NaN1     NaN2     NaN3     9.04    12.0dtype: float64
+</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">s</span><span class="o">.</span><span class="n">pct_change</span><span class="p">()</span>
+</code></pre></div>
+<pre><code>0         NaN1    2.0000002    1.0000003    0.6666674    0.500000dtype: float64
+</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">s</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div>
+<pre><code>0     3.01     6.02    10.03    15.04     NaNdtype: float64
+</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">s</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+</code></pre></div>
+<pre><code>0   -5.01   -7.02   -9.03    NaN4    NaNdtype: float64
+</code></pre>
+<p>これらをスライドウィンドウ関数とみなす理由は、これらの机能を <code>n+1</code> ウィンドウサイズの <code>rolling</code> メソッドに置き換えることができるからです。</p>
+<div class="highlight"><pre><span></span><code><span class="n">s</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="nb">list</span><span class="p">(</span><span class="n">x</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span> <span class="c1"># s.shift(2)</span>
+</code></pre></div>
+<pre><code>0    NaN1    NaN2    1.03    3.04    6.0dtype: float64
+</code></pre>
+<div class="highlight"><pre><span></span><code> <span class="n">s</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="nb">list</span><span class="p">(</span><span class="n">x</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="nb">list</span><span class="p">(</span><span class="n">x</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span> <span class="c1"># s.diff(3)</span>
+</code></pre></div>
+<pre><code>0     NaN1     NaN2     NaN3     9.04    12.0dtype: float64
+</code></pre>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">my_pct</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+     <span class="n">L</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+     <span class="k">return</span> <span class="n">L</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">L</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span>
+<span class="n">s</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">my_pct</span><span class="p">)</span> <span class="c1"># s.pct_change()</span>
+</code></pre></div>
+<pre><code>0         NaN1    2.0000002    1.0000003    0.6666674    0.500000dtype: float64
+</code></pre>
+</div>
+</div>
+<div class="slide-number">
+<p>24</p>
+</div>
+</div>
+</div>
+</div>
+<div class="slide-container">
+<div class="slide-content" style="">
+<h2>4. ウィンドウオブジェクト</h2>
+<h3>1. スライドウィンドウオブジェクト</h3>
+<div class="content">
+<div class="auto-sizing">
+<div class="chunk chunk-paragraph">
+<h4 id="_1">[練習して練習する]</h4>
+<p><code>rolling</code> オブジェクトのデフォルトのウィンドウ方向はすべて前方です。場合によっては、ユーザーが後方のウィンドウを必要とする場合があります。例えば、1,2,3に対して後方のウィンドウを2に設定した <code>sum</code> 操作は、結果は3,5,NaNです。この場合、後方のスライドウィンドウ操作をどのように実現すればよいでしょうか？</p>
+</div>
+</div>
+<div class="slide-number">
+<p>25</p>
+</div>
+</div>
+</div>
+</div>
+<div class="slide-container">
+<div class="slide-content" style="">
+<h2>4. ウィンドウオブジェクト</h2>
+<h3>2. 拡張ウィンドウ</h3>
+<div class="content">
+<div class="auto-sizing">
+<div class="chunk chunk-paragraph">
+<h4 id="end">[END]</h4>
+<p>拡張ウィンドウは累積ウィンドウとも呼ばれ、動的長さのウィンドウと理解することができ、そのウィンドウのサイズはシーケンスの開始から具体的な操作の対応する位置までであり、それが使用する集約関数はこれらの段階的に拡張されるウィンドウに作用する。具体的には、系列をa1，a2，a3，a4とすると、その各位置に対応するウィンドウは [a1]、 [a1，a2]、 [a1，a2，a3]、 [a1，a2，a3，a4] である。</p>
+<div class="highlight"><pre><span></span><code><span class="n">s</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
+<span class="n">s</span><span class="o">.</span><span class="n">expanding</span><span class="p">()</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</code></pre></div>
+<pre><code>0    1.0000001    2.0000002    3.3333333    5.000000dtype: float64
+</code></pre>
+</div>
+</div>
+<div class="slide-number">
+<p>26</p>
+</div>
+</div>
+</div>
+</div>
+<div class="slide-container">
+<div class="slide-content" style="">
+<h2>4. ウィンドウオブジェクト</h2>
+<h3>2. 拡張ウィンドウ</h3>
+<div class="content">
+<div class="auto-sizing">
+<div class="chunk chunk-paragraph">
+<h4 id="_1">[練習して練習する]</h4>
+<p><code>cummax, cumsum, cumprod</code> 関数は典型的なクラス拡張ウィンドウ関数です。 <code>expanding</code> オブジェクトを使用して順次実装してください。</p>
+</div>
+</div>
+<div class="slide-number">
+<p>27</p>
+</div>
+</div>
+</div>
+</div>
+<div class="slide-container">
+<div class="slide-content" style="">
+<h2>4. ウィンドウオブジェクト</h2>
+<h3>2. 拡張ウィンドウ</h3>
+<div class="content">
+<div class="auto-sizing">
+<div class="chunk chunk-paragraph">
+<h4 id="end">[END]</h4>
+</div>
+</div>
+<div class="slide-number">
+<p>28</p>
+</div>
+</div>
+</div>
+</div>
+<div class="slide-container">
+<div class="slide-content" style="">
+<h2>五、練習</h2>
+<h3>Ex1：ポケモンデータセット</h3>
+<div class="content">
+<div class="auto-sizing">
+<div class="chunk chunk-paragraph">
+<p>既存のポケモンのデータセットがあります。以下にいくつかの背景を説明します：</p>
+<ul>
+<li>
+<p><code>#</code> 全国図鑑番号を表し、行ごとに同じ数字があれば、その妖怪の異なる状態を表す</p>
+</li>
+<li>
+<p>妖怪には単一属性と二重属性の2種類があり、単一属性の妖怪の場合、 <code>Type 2</code> は欠落値です。</p>
+</li>
+<li><code>Total, HP, Attack, Defense, Sp. Atk, Sp. Def, Speed</code> それぞれ種族値、体力、物体攻撃、防御、特攻、特防、速度を表し、種族値は後の6項目の合計である</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">'../data/pokemon.csv'</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</code></pre></div>
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>#</th>
+<th>Name</th>
+<th>Type 1</th>
+<th>Type 2</th>
+<th>Total</th>
+<th>HP</th>
+<th>Attack</th>
+<th>Defense</th>
+<th>Sp. Atk</th>
+<th>Sp. Def</th>
+<th>Speed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+<td>1</td>
+<td>Bulbasaur</td>
+<td>Grass</td>
+<td>Poison</td>
+<td>318</td>
+<td>45</td>
+<td>49</td>
+<td>49</td>
+<td>65</td>
+<td>65</td>
+<td>45</td>
+</tr>
+<tr>
+<th>1</th>
+<td>2</td>
+<td>Ivysaur</td>
+<td>Grass</td>
+<td>Poison</td>
+<td>405</td>
+<td>60</td>
+<td>62</td>
+<td>63</td>
+<td>80</td>
+<td>80</td>
+<td>60</td>
+</tr>
+<tr>
+<th>2</th>
+<td>3</td>
+<td>Venusaur</td>
+<td>Grass</td>
+<td>Poison</td>
+<td>525</td>
+<td>80</td>
+<td>82</td>
+<td>83</td>
+<td>100</td>
+<td>100</td>
+<td>80</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ol>
+<li>
+<p><code>HP, Attack, Defense, Sp. Atk, Sp. Def, Speed</code> を合計し、 <code>Total</code> 値であるかどうかを確認します。</p>
+</li>
+<li>
+<p><code>#</code> 重複するモンスターの場合、最初のレコードのみを保持します。次の問題を解決します：</p>
+</li>
+<li>
+<p>第1属性の種類数と上位3多数に対応する種類を求める</p>
+</li>
+<li>第1属性と第2属性の組み合わせ種類を求める</li>
+<li>
+<p>まだ表示されていない属性の組み合わせを探す</p>
+</li>
+<li>
+<p>次のように <code>Series</code> を構築します：</p>
+</li>
+<li>
+<p>対象攻撃を取り出し、120以上の場合は <code>high</code>、50未満の場合は <code>low</code>、そうでない場合は <code>mid</code> に置き換えます。</p>
+</li>
+<li>最初の属性を取り出し、すべての文字をそれぞれ <code>replace</code> と <code>apply</code> で大文字に置き換えます</li>
+<li>各妖怪の6つの能力の偏差、すなわち、すべての能力の中で中央値から最も大きくずれた値を求め、 <code>df</code> に加算し、大きいから小さい順に並べ替えます。</li>
+</ol>
+</div>
+</div>
+<div class="slide-number">
+<p>29</p>
+</div>
+</div>
+</div>
+</div>
+<div class="slide-container">
+<div class="slide-content" style="">
+<h2>五、練習</h2>
+<h3>Ex2指数重み付けウィンドウ</h3>
+<div class="content">
+<div class="auto-sizing">
+<div class="chunk chunk-paragraph">
+<ol>
+<li>拡張ウィンドウとしての <code>ewm</code> ウィンドウ</li>
+</ol>
+<p>拡張ウィンドウでは、ユーザーはさまざまな関数を使用して履歴の累積指標統計を行うことができますが、これらの組み込み統計関数は、ウィンドウ内のすべての要素に同じ重みを付与することが多いです。実際、ウィンドウ内の要素に異なる重みを与えることができ、指数重みウィンドウはそのような特殊な拡張ウィンドウである。</p>
+<p>このうち、最も重要な引数は <code>alpha</code> で、デフォルトのウィンドウ重みを\(w_i= (1−\alpha) ^i,i\in\ {0,1,...,t\} \)に決定します。ここで、\(i=t\)は現在の要素を表し、\(i=0\)はシーケンスの最初の要素を表します。</p>
+<p>重み式から分かるように、現在の値から離れるほど重みは小さくなり、元の系列を\(x\)、更新された現在の要素を\(y_t\)とすると、重み式で正規化すると、次のことがわかる：</p>
+\[
+\begin{split}y_t &amp;=\frac{\sum_{i=0}^{t} w_i x_{t-i}}{\sum_{i=0}^{t} w_i} \\
+&amp;=\frac{x_t + (1 - \alpha)x_{t-1} + (1 - \alpha)^2 x_{t-2} + ...
++ (1 - \alpha)^{t} x_{0}}{1 + (1 - \alpha) + (1 - \alpha)^2 + ...
++ (1 - \alpha)^{t}}\\\end{split}
+\]
+
+<p><code>Series</code> の場合、指数平滑化されたシーケンスは、 <code>ewm</code> オブジェクトを使用して次のように計算できます：</p>
+<div class="highlight"><pre><span></span><code><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">30</span><span class="p">)</span><span class="o">.</span><span class="n">cumsum</span><span class="p">())</span>
+<span class="n">s</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div>
+<pre><code>0   -11   -12   -23   -24   -2dtype: int32
+</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">s</span><span class="o">.</span><span class="n">ewm</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div>
+<pre><code>0   -1.0000001   -1.0000002   -1.4098363   -1.6097564   -1.725845dtype: float64
+</code></pre>
+<p><code>expanding</code> ウィンドウで実装してください。</p>
+<ol>
+<li>スライドウィンドウとしての <code>ewm</code> ウィンドウ</li>
+</ol>
+<p>質問1からわかるように、 <code>ewm</code> は、拡張ウィンドウの特別なケースとして、シーケンスの最初の要素からのみ重み付けることができます。制限されたウィンドウ <code>n</code> を与えて、ウィンドウとして自分自身を含む最も近い <code>n</code> 要素のみをスライディング重み付けスムージングしたいと思います。スライドウィンドウ関数に基づいて、新しい <code>wi</code> と <code>yt</code> の更新式を与え、これを <code>rolling</code> ウィンドウで実装します。</p>
+</div>
+</div>
+<div class="slide-number">
+<p>30</p>
+</div>
+</div>
+</div>
+</div>
+<div class="floating-btn">
+<button class="action-btn" onclick="togglePresentationMode()">
+            💻 Toggle Slideshow
+        </button>
+<button class="action-btn" onclick="window.print()">
+            🖨 Save as PDF
+        </button>
+</div>
+<script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        const colorScheme = getComputedStyle(document.documentElement).getPropertyValue('--colorscheme').trim();
+        var mermaid_theme = "default";
+        if (colorScheme === "dark") {
+            console.log("Using dark theme");
+            mermaid_theme = "dark";
+        }
+        mermaid.initialize({ startOnLoad: true, theme: mermaid_theme });
+    </script>
+<script src="js/main.js"></script>
+<script src="js/extension.js"></script>
+</body>
+</html>
