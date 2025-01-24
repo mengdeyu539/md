@@ -1,58 +1,6 @@
 #Stacked Regressions to predict House Prices 
 
 
-##Serigne
-
-**July 2017**
-
-**If you use parts of this notebook in your scripts/notebooks, giving  some kind of credit would be very much appreciated :)  You can for instance link back to this notebook. Thanks!**
-
-This competition is very important to me as  it helped me to begin my journey on Kaggle few months ago. I've read  some great notebooks here. To name a few:
-
-1. [Comprehensive data exploration with Python][1] by **Pedro Marcelino**  : Great and very motivational data analysis
-
-2. [A study on Regression applied to the Ames dataset][2] by **Julien Cohen-Solal**  : Thorough features engeneering and deep dive into linear regression analysis  but really easy to follow for beginners.
-
-3. [Regularized Linear Models][3] by **Alexandru Papiu**  : Great Starter kernel on modelling and Cross-validation
-
-I can't recommend enough every beginner to go carefully through these kernels (and of course through many others great kernels) and get their first insights in data science and kaggle competitions.
-
-After that (and some basic pratices) you should be more confident to go through [this great script][7] by **Human Analog**  who did an impressive work on features engeneering. 
-
-As the dataset is particularly handy, I  decided few days ago to get back in this competition and apply things I learnt so far, especially stacking models. For that purpose, we build two stacking classes  ( the simplest approach and a less simple one). 
-
-As these classes are written for general purpose, you can easily adapt them and/or extend them for your regression problems. 
-The overall approach is  hopefully concise and easy to follow.. 
-
-The features engeneering is rather parsimonious (at least compared to some others great scripts) . It is pretty much :
-
-- **Imputing missing values**  by proceeding sequentially through the data
-
-- **Transforming** some numerical variables that seem really categorical
-
-- **Label Encoding** some categorical variables that may contain information in their ordering set
-
--  [**Box Cox Transformation**][4] of skewed features (instead of log-transformation) : This gave me a **slightly better result** both on leaderboard and cross-validation.
-
-- ** Getting dummy variables** for categorical features. 
-
-Then we choose many base models (mostly sklearn based models + sklearn API of  DMLC's [XGBoost][5] and Microsoft's [LightGBM][6]), cross-validate them on the data before stacking/ensembling them. The key here is to make the (linear) models robust to outliers. This improved the result both on LB and cross-validation. 
-
-  [1]: https://www.kaggle.com/pmarcelino/comprehensive-data-exploration-with-python
-  [2]:https://www.kaggle.com/juliencs/a-study-on-regression-applied-to-the-ames-dataset
-  [3]: https://www.kaggle.com/apapiu/regularized-linear-models
-  [4]: http://onlinestatbook.com/2/transformations/box-cox.html
-  [5]: https://github.com/dmlc/xgboost
- [6]: https://github.com/Microsoft/LightGBM
- [7]: https://www.kaggle.com/humananalog/xgboost-lasso
-
-To my surprise, this does well on LB ( 0.11420 and top 4% the last time I tested it : **July 2, 2017** )
-
-
-
-**Hope that at the end of this notebook, stacking will be clear for those, like myself, who found the concept not so easy to grasp**
-
-
 ```python
 #import some necessary librairies
 
